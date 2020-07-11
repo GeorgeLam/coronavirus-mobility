@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corona Track</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        <script defer src="./corona.js"></script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+    <canvas id="myChart" width="800" height="400"></canvas>
+
+
+    <div class="dataSection">
+        <label for="data-type">Choose a data type:</label>
+        
+        <select name="type" id="type">
+            <option value=7>Retail and recreation</option>
+            <option value=8>Groceries and pharmacies</option>
+            <option value=9>Parks</option>
+            <option value=10>Transit Stations</option>
+            <option value=11>Workplaces</option>
+            <option value=12>Residential</option>
+        </select>
+
+    </div>
+
+    <div class="areaSection">
+        <label for="chosenArea">Choose a location:</label>
+        
+        <select name="chosenArea" id="chosenArea">
+            <option value="Greater London">Greater London</option>
+            <option value="Edinburgh">Edinburgh</option>
+            <option value="Glasgow City">Glasgow</option>
+            <option value="Swindon">Swindon</option>
+            <option value="Bristol City">Bristol</option>
+            <option value="Bath and North East Somerset">Bath and North East Somerset</option>
+            <option value="Brighton and Hove">Brighton & Hove</option>
+            <option value="York">York</option>
+            <option value="Cardiff">Cardiff</option>
+        </select>
+    </div>
+
+    <!-- <div id="color">Hello</div> -->
+</body>
+</html>

@@ -1,0 +1,30 @@
+body{
+    background-color: #ffea;
+    color: #0f0f0f;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+#color{
+    background-color: rgba(1,1,1,0.4);
+    width: 100vh;
+    height: 500px;
+}
+
+label{
+    font-size: 2em;
+}
+
+select{
+    font-size: 1.2em;
+}
+
+.dataSection{
+margin-left: 80px;    padding-right: 70px;
+}
+
+.dataSection, .areaSection{
+    display: inline;
+}
