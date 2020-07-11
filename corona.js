@@ -20,7 +20,12 @@ document.querySelector("#chosenArea").addEventListener("change", (e) => {
 console.log(type)
 
 async function corona(){
-    let response = await fetch("loc-fulltime.csv");
+    let response;
+    if (chosenArea !== ""){
+        response = await fetch("loc-fulltime.csv");
+    } else{
+        response = await fetch("taiwan.csv");
+    }
     let data = await response.text();
     let output = data.split('\n').slice(1)
     //console.log(output);
@@ -36,8 +41,6 @@ async function corona(){
         //console.log(item.split(',')[2], item.split(',')[6], item.split(',')[7]);
     })
 
-    //console.log(visits)
-    //console.log(dates);
     return(visits);
 };
 
@@ -46,7 +49,6 @@ charter();
 async function charter(){
     await corona();
     var ctx = document.getElementById('myChart').getContext('2d');
-    console.log(typeName);
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -62,6 +64,9 @@ async function charter(){
             }]
         },
         options: {
+            events: ['click'],
+
+
             scales: {
                 xAxes: [{
                     ticks: {
@@ -75,5 +80,6 @@ async function charter(){
             }
         }
     })
+
 }
 
