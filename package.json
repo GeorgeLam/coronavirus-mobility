@@ -1,0 +1,24 @@
+{
+  "name": "mobility",
+  "version": "1.0.0",
+  "description": "Using Google's Mobility data to display changes in traffic to locations during covid-19",
+  "main": "a.js",
+  "scripts": {
+    "start": "nodemon a.js"
+  },
+  "keywords": [
+    "google",
+    "api",
+    "mobility"
+  ],
+  "author": "George Lam",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.23",
+    "nedb": "^1.8.0",
+    "nodemon": "^2.0.4"
+  }
+}
