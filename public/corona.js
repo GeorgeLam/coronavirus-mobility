@@ -1,8 +1,56 @@
 let type = 0;
-let chosenArea = "Greater London"
+let chosenArea = "Greater London";
+let chosenCountry = "United Kingdom";
 dataFetch(type, chosenArea);
+countryList = [];
 
 cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "Transit Stations", "Workplaces", "Residential"]; //differs from below 'typeNames' as this is a clean version of the type naming. Below variable typeNames uses the specific naming that is held in the DB.
+
+//Autofill for countrynames
+var options = {
+  url: "./regions_by_country2.json",
+  getValue: "country",
+  list: {
+    match: {
+      enabled: true
+    },
+
+    onClickEvent: function () {
+      cName = $("#countryName").val()
+      console.log(cName)
+    }	
+  }
+};
+$("#countryName").easyAutocomplete(options);
+
+
+
+// async function locGet() {
+//   let response = await fetch('./regions_by_country2.txt');
+//   let data = await response.text();
+//   let parsed = JSON.parse(data);
+//   //console.log(parsed);
+//   parsed.forEach(country => {
+//     countryList.push(country["country"])
+//   })
+// };
+
+
+
+// locGet();
+
+// console.log(countryList);
+
+
+
+
+
+
+showData = document.querySelector("#showData").addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log(document.querySelector("#country").value)
+  chosenCountry = document.querySelector("#country").value;
+})
 
 async function dataFetch(){
     console.log(`Data fetch called! You input type: ${type} and ${chosenArea}`)
@@ -19,7 +67,7 @@ async function dataFetch(){
     };
     const fetching = await fetch("posts/api/", fetchOpt);
     const resp = await fetching.json();
-    //console.log(resp);
+    console.log(resp);
 
     resp.forEach((item) => {
       dates.push(item.date);
@@ -52,6 +100,12 @@ document.querySelector("#chosenArea").addEventListener("change", async (e) => {
     chosenArea = e.target.value;
     dataFetch(chosenArea);
     })
+
+document.querySelector("#countryName").addEventListener("onfocusout", (e) => {
+  //chosenArea = e.target.value;
+  //dataFetch(chosenArea);
+  console.log(e.target.value);
+})
 
 
 async function charter(dates, visits){
