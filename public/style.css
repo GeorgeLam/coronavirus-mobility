@@ -7,6 +7,16 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.areaSection{
+    display: flex;
+    flex-direction: column;
+}
+
 #color{
     background-color: rgba(1,1,1,0.4);
     width: 100vh;
@@ -22,9 +32,7 @@ select{
 }
 
 .dataSection{
-margin-left: 80px;    padding-right: 70px;
-}
-
-.dataSection, .areaSection{
-    display: inline;
+/* margin-left: 80px;    padding-right: 70px; */
+display: flex;
+flex-direction: row;
 }

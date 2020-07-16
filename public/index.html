@@ -18,6 +18,9 @@
 
     <!-- CSS file -->
     <link rel="stylesheet" href="./easy-autocomplete.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
     
     <!-- Additional CSS Themes file - not required-->
     <link rel="stylesheet" href="./easy-autocomplete.themes.min.css">
@@ -27,50 +30,59 @@
 
 </head>
 <body>
-    
-    <canvas id="myChart" width="800" height="400"></canvas>
+    <div class="container-fluid">
+    <div class="canvas-con">
+    <canvas id="myChart" width="900" height="400"></canvas>
+    </div>
 
+    <div class="row dataSection">
+        <div class="col text-center">
+            <label for="chosenArea">Choose a country:</label>
+            <br/>
+            <input type="text" class="" id="countryName" autocomplete="off" spellcheck="false" />
+        </div>
 
-    <div class="dataSection">
-        <label for="data-type">Choose a data type:</label>
-        
-        <select name="type" id="type">
-            <option value=0>Retail and recreation</option>
-            <option value=1>Groceries and pharmacies</option>
-            <option value=2>Parks</option>
-            <option value=3>Transit Stations</option>
-            <option value=4>Workplaces</option>
-            <option value=5>Residential</option>
-        </select>
+        <div class="col text-center">
+            <label for="chosenArea">Choose a location:</label>
+            <select name="chosenArea" id="chosenArea">
+                <option value="Greater London">Greater London</option>
+                <option value="Edinburgh">Edinburgh</option>
+                <option value="Glasgow City">Glasgow</option>
+                <option value="Swindon">Swindon</option>
+                <option value="Bristol City">Bristol</option>
+                <option value="Bath and North East Somerset">Bath and North East Somerset</option>
+                <option value="Brighton and Hove">Brighton & Hove</option>
+                <option value="York">York</option>
+                <option value="Cardiff">Cardiff</option>
+                <option value="">Taiwan</option>
+            </select>
+        </div>
+        <div class="col text-center">
+            <label for="data-type">Choose a data type:</label>
+            <br />
+            <select name="type" id="type">
+                <option value=0>Retail and recreation</option>
+                <option value=1>Groceries and pharmacies</option>
+                <option value=2>Parks</option>
+                <option value=3>Transit Stations</option>
+                <option value=4>Workplaces</option>
+                <option value=5>Residential</option>
+            </select>
+        </div>
+        <!-- <div class="sel">
+        <button type="submit" id="showData">Show Data</button>
+        </div> -->
+    </div>
+
 
     </div>
 
-    <div class="areaSection">
-        <label for="chosenArea">Choose a location:</label>
-        
-        <select name="chosenArea" id="chosenArea">
-            <option value="Greater London">Greater London</option>
-            <option value="Edinburgh">Edinburgh</option>
-            <option value="Glasgow City">Glasgow</option>
-            <option value="Swindon">Swindon</option>
-            <option value="Bristol City">Bristol</option>
-            <option value="Bath and North East Somerset">Bath and North East Somerset</option>
-            <option value="Brighton and Hove">Brighton & Hove</option>
-            <option value="York">York</option>
-            <option value="Cardiff">Cardiff</option>
-            <option value="">Taiwan</option>
-        </select>
-    </div>
 
-    <div class="areaSection">
-        <label for="chosenArea">Choose a country:</label>
-        <input type="text" class="" id="countryName" autocomplete="off" spellcheck="false" />
-    </div>
-
-    <button type="submit" id="showData">Show Data</button>
-
-    <!-- <div id="color">Hello</div> -->
-
-
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>

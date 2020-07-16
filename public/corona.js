@@ -3,12 +3,15 @@ let chosenArea = "Greater London";
 let chosenCountry = "United Kingdom";
 dataFetch(type, chosenArea);
 countryList = [];
+let nationwideSearch;
+
+console.log("Js loaded")
 
 cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "Transit Stations", "Workplaces", "Residential"]; //differs from below 'typeNames' as this is a clean version of the type naming. Below variable typeNames uses the specific naming that is held in the DB.
 
 //Autofill for countrynames
 var options = {
-  url: "./regions_by_country2.json",
+  url: "./regions_by_country3.json",
   getValue: "country",
   list: {
     match: {
@@ -18,30 +21,47 @@ var options = {
     onClickEvent: function () {
       cName = $("#countryName").val()
       console.log(cName)
+      locGet(cName)
     }	
   }
 };
 $("#countryName").easyAutocomplete(options);
 
+regionList = [];
+let parsed;
+
+async function locGet(cName) {
+  let response = await fetch('./regions_by_country3.json');
+  let data = await response.text();
+  parsed = JSON.parse(data);
+  console.log(parsed);
+  verr = parsed.filter(item => (item["country"] == cName))[0]["regions"]
+  console.log(verr)
+  listChg();
+};
 
 
-// async function locGet() {
-//   let response = await fetch('./regions_by_country2.txt');
-//   let data = await response.text();
-//   let parsed = JSON.parse(data);
-//   //console.log(parsed);
-//   parsed.forEach(country => {
-//     countryList.push(country["country"])
-//   })
-// };
 
+locGet();
 
+console.log(countryList);
+let inpu;
 
-// locGet();
-
-// console.log(countryList);
-
-
+function listChg(){
+  dropd = document.querySelector("#chosenArea");
+  while (dropd.firstChild) {
+    console.log("removing")
+    dropd.removeChild(dropd.lastChild);
+  }
+  verr.forEach(region => {
+    console.log("Adding " + region);
+    newO = document.createElement("option");
+    newO.textContent = region;
+    newO.value = region;
+    dropd.appendChild(newO);
+  })
+  activat();
+}
 
 
 
@@ -91,15 +111,28 @@ async function dataFetch(){
     charter(dates, visits);
 }
 
-document.querySelector("#type").addEventListener("change", async(e) => {
-    type = e.target.value;
-    dataFetch(type);
-})
 
-document.querySelector("#chosenArea").addEventListener("change", async (e) => {
-    chosenArea = e.target.value;
-    dataFetch(chosenArea);
+
+function activat(){
+    document.querySelector("#chosenArea").addEventListener("change", async (e) => {
+      console.log("CA changed")
+      chosenArea = e.target.value;
+      if (chosenArea == "Nationwide"){
+        chosenArea = cName;
+        nationwideSearch = true;
+        console.log("Nationwide, so switched to: " + chosenArea)
+      }
+      else{
+        nationwideSearch = false;
+      }
+      dataFetch(chosenArea);
+      })
+
+    document.querySelector("#type").addEventListener("change", async (e) => {
+      type = e.target.value;
+      dataFetch(type);
     })
+  }
 
 document.querySelector("#countryName").addEventListener("onfocusout", (e) => {
   //chosenArea = e.target.value;
