@@ -1,13 +1,15 @@
 let type = 0;
 let chosenArea = "Greater London";
-let chosenCountry = "United Kingdom";
+let cName = "United Kingdom";
 dataFetch(type, chosenArea);
 countryList = [];
 let nationwideSearch;
+regionList = [];
+let parsed;
 
 console.log("Js loaded")
 
-cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "Transit Stations", "Workplaces", "Residential"]; //differs from below 'typeNames' as this is a clean version of the type naming. Below variable typeNames uses the specific naming that is held in the DB.
+cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "Transit Stations", "Workplaces", "Residences"]; //differs from below 'typeNames' as this is a clean version of the type naming. Below variable typeNames uses the specific naming that is held in the DB.
 
 //Autofill for countrynames
 var options = {
@@ -27,8 +29,9 @@ var options = {
 };
 $("#countryName").easyAutocomplete(options);
 
-regionList = [];
-let parsed;
+
+
+activat();
 
 async function locGet(cName) {
   let response = await fetch('./regions_by_country3.json');
@@ -37,12 +40,14 @@ async function locGet(cName) {
   console.log(parsed);
   verr = parsed.filter(item => (item["country"] == cName))[0]["regions"]
   console.log(verr)
+  console.log("Calling listchg up")
+
   listChg();
 };
 
 
 
-locGet();
+//locGet();
 
 console.log(countryList);
 let inpu;
@@ -60,7 +65,12 @@ function listChg(){
     newO.value = region;
     dropd.appendChild(newO);
   })
-  activat();
+  chosenArea = document.querySelector("#chosenArea").value;
+  console.log(chosenArea);
+  dataFetch(chosenArea);
+
+  console.log("Hello12312")
+
 }
 
 
@@ -69,7 +79,7 @@ function listChg(){
 showData = document.querySelector("#showData").addEventListener("click", (e) => {
   e.preventDefault();
   console.log(document.querySelector("#country").value)
-  chosenCountry = document.querySelector("#country").value;
+  cName = document.querySelector("#country").value;
 })
 
 async function dataFetch(){
@@ -77,7 +87,7 @@ async function dataFetch(){
     dates = [];
     visits = [];
 
-    let data = { type, chosenArea };
+    let data = { type, chosenArea, cName };
     let fetchOpt = {
       method: "POST",
       headers: {
@@ -109,6 +119,8 @@ async function dataFetch(){
     //console.log(visits);
 
     charter(dates, visits);
+  //activat();
+
 }
 
 
@@ -117,38 +129,40 @@ function activat(){
     document.querySelector("#chosenArea").addEventListener("change", async (e) => {
       console.log("CA changed")
       chosenArea = e.target.value;
-      if (chosenArea == "Nationwide"){
-        chosenArea = cName;
-        nationwideSearch = true;
-        console.log("Nationwide, so switched to: " + chosenArea)
-      }
-      else{
-        nationwideSearch = false;
-      }
+      // if (chosenArea == "Nationwide"){
+      //   chosenArea = cName;
+      //   nationwideSearch = true;
+      //   console.log("Nationwide, so switched to: " + chosenArea)
+      // }
+      // else{
+      //   nationwideSearch = false;
+      // }
       dataFetch(chosenArea);
       })
 
     document.querySelector("#type").addEventListener("change", async (e) => {
+      console.log("type change")
       type = e.target.value;
       dataFetch(type);
     })
-  }
+}
 
-document.querySelector("#countryName").addEventListener("onfocusout", (e) => {
-  //chosenArea = e.target.value;
-  //dataFetch(chosenArea);
-  console.log(e.target.value);
-})
+// document.querySelector("#countryName").addEventListener("onfocusout", (e) => {
+//   //chosenArea = e.target.value;
+//   //dataFetch(chosenArea);
+//   console.log(e.target.value);
+// })
 
 
 async function charter(dates, visits){
+  console.log("charting!")
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: dates,
             datasets: [{
-                label: `${chosenArea} - % Decrease in Visits to ${cleanTypeName[type]}`,
+                label: `${chosenArea} - % Change in Activity in ${cleanTypeName[type]}`,
                 data: visits,
                 backgroundColor: [
                     'rgba(44, 226, 66, 0.5)'],

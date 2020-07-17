@@ -48,13 +48,21 @@ router.post("/api/", jsonParser, async(req, res) => {
       "residential_percent_change_from_baseline"
     ];
     let searchingType = typeNames[req.body.type];
-    console.log(req.body.type);
     console.log(searchingType);
+
+    console.log(req.body);
+    if(req.body.chosenArea == "Nationwide"){
+      console.log("Searching for nationwide, so we'll use: " + req.body.cName)
+      req.body.chosenArea = "";
+    }
+    console.log(req.body);
 
 
     try{
         const allPosts = await Post.find({
+          country_region: req.body.cName,
           sub_region_1: req.body.chosenArea,
+          sub_region_2: "",
           //date: "20/03/20"
         }).select(
           `sub_region_1 date ${searchingType}`

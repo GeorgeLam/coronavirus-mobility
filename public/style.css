@@ -1,6 +1,8 @@
 body{
     background-color: #ffea;
     color: #0f0f0f;
+    overflow-x: none;
+    box-sizing: border-box;
 }
 
 *{
@@ -23,12 +25,29 @@ body{
     height: 500px;
 }
 
+#countryName{
+    text-align: center;
+}
+
 label{
     font-size: 2em;
 }
 
 select{
     font-size: 1.2em;
+}
+
+.easy-autocomplete, .east-autocomplete-container{
+    /* width: 100% !important; */
+    position: relative !important;
+    margin: auto !important;
+    width: 200px !important;
+}
+
+
+
+.entries{
+    height: 35px;
 }
 
 .dataSection{
