@@ -6,6 +6,8 @@ countryList = [];
 let nationwideSearch;
 regionList = [];
 let parsed;
+// secondTime = false;
+// let type2, visits2, chosenArea2;
 
 console.log("Js loaded")
 
@@ -29,8 +31,6 @@ var options = {
 };
 $("#countryName").easyAutocomplete(options);
 
-
-
 activat();
 
 async function locGet(cName) {
@@ -44,8 +44,6 @@ async function locGet(cName) {
 
   listChg();
 };
-
-
 
 //locGet();
 
@@ -68,12 +66,7 @@ function listChg(){
   chosenArea = document.querySelector("#chosenArea").value;
   console.log(chosenArea);
   dataFetch(chosenArea);
-
-  console.log("Hello12312")
-
 }
-
-
 
 
 showData = document.querySelector("#showData").addEventListener("click", (e) => {
@@ -142,9 +135,24 @@ function activat(){
 
     document.querySelector("#type").addEventListener("change", async (e) => {
       console.log("type change")
+      // if(secondTime){
+      //   type2 = e.target.value;
+      //   dataFetch(type);
+      // }
       type = e.target.value;
       dataFetch(type);
+      // secondTime = true;
     })
+
+  // document.querySelector("#compare").addEventListener("click", () => {
+  //   console.log("comparing")
+  //   console.log(dates);
+  //   console.log(visits);
+  //   dates2 = dates;
+  //   visits2 = visits;
+  //   chosenArea2 = chosenArea;
+  //   type2 = cleanTypeName[type];
+  // })
 }
 
 // document.querySelector("#countryName").addEventListener("onfocusout", (e) => {
@@ -169,7 +177,17 @@ async function charter(dates, visits){
                 borderColor: [
                     'rgba(255, 99, 132, 1)'],
                 borderWidth: 1
-            }]
+            }
+        //       {
+        //         label: `${chosenArea2} - % Change in Activity in ${type2}`,
+        //         data: visits2,
+        //         backgroundColor: [
+        //           'rgba(14, 6, 26, 0.5)'],
+        //         borderColor: [
+        //           'rgba(255, 99, 132, 1)'],
+        //         borderWidth: 1
+        //       }
+        ]
         },
         options: {
             events: ['click']

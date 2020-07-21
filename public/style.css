@@ -1,7 +1,6 @@
 body{
-    background-color: #ffea;
+    background-color: rgba(82, 82, 82, 0.667);
     color: #0f0f0f;
-    overflow-x: none;
     box-sizing: border-box;
 }
 
@@ -23,10 +22,6 @@ body{
     background-color: rgba(1,1,1,0.4);
     width: 100vh;
     height: 500px;
-}
-
-#countryName{
-    text-align: center;
 }
 
 label{
