@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 require('dotenv/config');
+//require('dotenv').config({ path: '.env' });
+
 
 const postRoute = require('./routes/posts');
 app.use('/posts', postRoute);
@@ -14,7 +16,7 @@ app.use('/posts', postRoute);
 //const router = express.Router();
 //const { MongoClient } = require('mongodb');
 
-app.listen(3000, () => console.log("Salad"));
+app.listen(process.env.PORT || 5000, () => console.log("Salad"));
 app.use(express.static('public'));
 app.use(express.json({limit: '1mb'}));
 //app.use(bodyParser.json());
