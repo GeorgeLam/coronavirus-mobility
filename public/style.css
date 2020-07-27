@@ -2,6 +2,7 @@ body{
     background-color: rgba(82, 82, 82, 0.667);
     color: #0f0f0f;
     box-sizing: border-box;
+    overflow-y: hidden;
 }
 
 *{
