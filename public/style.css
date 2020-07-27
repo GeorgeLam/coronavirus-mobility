@@ -2,7 +2,7 @@ body{
     background-color: rgba(82, 82, 82, 0.667);
     color: #0f0f0f;
     box-sizing: border-box;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 *{
@@ -50,4 +50,32 @@ select{
 /* margin-left: 80px;    padding-right: 70px; */
 display: flex;
 flex-direction: row;
+}
+
+/* #myChart{
+     width: 360;
+     height: 600;
+} */
+
+.chart-container{
+    position: relative; 
+    height:60vh; 
+    width:95vw
+}
+
+@media (min-width: 992px){
+    .chart-container{
+        position: relative; 
+        height:80vh; 
+        width:95vw
+    }
+}
+
+@media (max-width: 400px), (max-height: 400px){
+    .chart-container{
+        margin-bottom: 1.2em;
+    }
+    label, input{
+        font-size: 1.2em;
+    }
 }

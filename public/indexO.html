@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coronavirus Mobility</title>
+    <title>Corona Track</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -25,24 +25,27 @@
     <!-- Additional CSS Themes file - not required-->
     <link rel="stylesheet" href="./easy-autocomplete.themes.min.css">
 
+
+
+
 </head>
 <body>
     <div class="container-fluid">
-    <div class="chart-container">
-        <canvas id="myChart" style="height: 25rem"></canvas>
+    <div class="canvas-con">
+    <canvas id="myChart" width="900" height="400"></canvas>
     </div>
 
     <div class="row dataSection">
-        <div class="col col-12 col-sm-4 col-lg-4 text-center">
+        <div class="col text-center">
             <label for="chosenArea">Choose a country:</label>
             <br/>
-            <input type="text" class="mb-2 entries" id="countryName" autocomplete="off" spellcheck="false" />
+            <input type="text" class="entries" id="countryName" autocomplete="off" spellcheck="false" />
         </div>
 
-        <div class="col col-12 col-sm-4 col-lg-4 text-center">
+        <div class="col text-center">
             <label for="chosenArea">Choose a location:</label>
             <br/>
-            <select name="chosenArea" id="chosenArea" class="mb-2 entries">
+            <select name="chosenArea" id="chosenArea" class="entries">
                 <option value="Greater London">Greater London</option>
                 <option value="Edinburgh">Edinburgh</option>
                 <option value="Glasgow City">Glasgow</option>
@@ -54,10 +57,10 @@
                 <option value="Cardiff">Cardiff</option>
             </select>
         </div>
-        <div class="col col-12 col-sm-4 col-lg-4 text-center">
+        <div class="col text-center">
             <label for="data-type">Choose a data type:</label>
             <br />
-            <select name="type" id="type" class="mb-2 entries">
+            <select name="type" id="type" class="entries">
                 <option value=0>Retail and recreation</option>
                 <option value=1>Groceries and pharmacies</option>
                 <option value=2>Parks</option>
