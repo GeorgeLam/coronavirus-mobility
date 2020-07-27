@@ -63,7 +63,7 @@ flex-direction: row;
     width:95vw
 }
 
-@media (min-width: 992px){
+@media (min-width: 768px){
     .chart-container{
         position: relative; 
         height:80vh; 
@@ -77,5 +77,12 @@ flex-direction: row;
     }
     label, input{
         font-size: 1.2em;
+    }
+}
+
+@media (max-height: 400px){
+    .chart-container{
+        margin-bottom: 1em;
+        height: 70vh;
     }
 }

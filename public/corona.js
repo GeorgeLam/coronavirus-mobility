@@ -44,7 +44,7 @@ var options = {
     onClickEvent: function () {
       cName = $("#countryName").val()
       console.log(cName)
-      //locGet(cName)
+      locGet(cName)
     }	
   }
 };
@@ -88,11 +88,11 @@ function listChg(){
 }
 
 
-// showData = document.querySelector("#showData").addEventListener("click", (e) => {
-//   e.preventDefault();
-//   console.log(document.querySelector("#country").value)
-//   cName = document.querySelector("#country").value;
-// })
+showData = document.querySelector("#showData").addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log(document.querySelector("#country").value)
+  cName = document.querySelector("#country").value;
+})
 
 async function dataFetch(){
     console.log(`Data fetch called! You input type: ${type} and ${chosenArea}`)
