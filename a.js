@@ -15,8 +15,8 @@ app.use('/posts', postRoute);
 //const Post = require('../Node/routes/models');
 //const router = express.Router();
 //const { MongoClient } = require('mongodb');
-
-app.listen(process.env.PORT || 5000, () => console.log("Salad"));
+portNum = process.env.PORT || 5000
+app.listen(portNum, () => console.log(`Listening on ${portNum}`));
 app.use(express.static('public'));
 app.use(express.json({limit: '1mb'}));
 //app.use(bodyParser.json());
