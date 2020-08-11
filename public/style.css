@@ -26,18 +26,19 @@ body{
 }
 
 label{
-    font-size: 2em;
+    font-size: 1.2em;
 }
 
-select{
+select, input{
     font-size: 1.2em;
+    width: 90%;
 }
 
 .easy-autocomplete, .east-autocomplete-container{
     /* width: 100% !important; */
     position: relative !important;
-    margin: auto !important;
-    width: 200px !important;
+    /* margin: auto !important; */
+    width: 100% !important;
 }
 
 
@@ -59,17 +60,22 @@ flex-direction: row;
 
 .chart-container{
     position: relative; 
-    height:60vh; 
-    width:95vw
+    height:57vh; 
 }
 
 @media (min-width: 768px){
     .chart-container{
         position: relative; 
         height:80vh; 
-        width:95vw
     }
 }
+
+@media (min-width: 1200px){
+  label{
+        font-size: 1.6em;
+    }
+}
+
 
 @media (max-width: 400px), (max-height: 400px){
     .chart-container{
@@ -84,5 +90,14 @@ flex-direction: row;
     .chart-container{
         margin-bottom: 1em;
         height: 70vh;
+    }
+    label{
+        font-size: 0.8em;
+    }
+    select, input{
+        /* width: 140px */
+    }
+    .text-center{
+        text-align: left;
     }
 }

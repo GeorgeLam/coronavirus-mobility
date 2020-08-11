@@ -136,7 +136,7 @@ async function dataFetch(){
 
     //setts = [];
   setts[counter] = {
-    label: `${chosenArea}, ${cName} - % Change in Activity in ${cleanTypeName[type]}`,
+    label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
     data: visits,
     backgroundColor: [
       'rgba(44, 226, 66, 0)'],
@@ -159,7 +159,7 @@ function activat(){
   $("#compare").click(() => {
     console.log("Comp clicked", ++counter);
     setts[counter] = {
-      label: `${chosenArea}, ${cName} - % Change in Activity in ${cleanTypeName[type]}`,
+      label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
       data: visits,
       backgroundColor: [
         'rgba(44, 226, 66, 0)'],
@@ -235,12 +235,33 @@ async function charter(setts){
               //     'rgba(0, 181,204, 1)'],
               //   borderWidth: 3
               // }
-        
         },
         options: {
-            events: ['click'],
-            responsive: true, maintainAspectRatio: false 
-        }
+          events: ['click'],
+          responsive: true, maintainAspectRatio: false,
+          scales: {
+            xAxes: [{
+              afterTickToLabelConversion: function (data) {
+
+
+                var xLabels = data.ticks;
+
+                xLabels.forEach(function (labels, i) {
+                  if (i % 2 == 0) {
+                    xLabels[i] = '';
+                  }
+                });
+              }
+            }]  
+          },            
+          legend: {
+            display: true,
+            labels: {
+              fontSize:10,
+              boxWidth:10
+            }
+          }
+      }
     })
 }
 
