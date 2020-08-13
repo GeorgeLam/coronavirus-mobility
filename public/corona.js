@@ -1,6 +1,10 @@
 console.log("LOADING V2")
 let type = 0;
 let chosenArea = "Greater London";
+areaSet = []
+typesSet = []
+areaSet[0] = chosenArea;
+typesSet[0] = type;
 let cName = "United Kingdom";
 dataFetch(type, chosenArea);
 countryList = [];
@@ -15,9 +19,15 @@ console.log("Js loaded")
 
 cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "Transit Stations", "Workplaces", "Residences"]; //differs from below 'typeNames' as this is a clean version of the type naming. Below variable typeNames uses the specific naming that is held in the DB.
 
+// inputs = [
+//   {
+//     chosenArea, type
+//   }
+// ]
 
 
-currentBtn = 1;
+
+currentBtn = 0;
 btnColorSwitch = (e) => {
   targeter = e ? `#${e.target.id}` : `#btn${btnCounter}` 
   console.log(targeter);
@@ -25,13 +35,22 @@ btnColorSwitch = (e) => {
   $(".btn").addClass("btn-light");
   $(targeter).removeClass("btn-light");
   $(targeter).addClass("btn-primary");
-  currentBtn = targeter.slice(4);
+  currentBtn = targeter.slice(4) - 1;
   console.log(currentBtn)
+}
+
+btnInputSwitch = (e) => {
+  console.log(currentBtn)
+  // console.log(inputs)
+  // console.log(inputs[currentBtn])
+  document.querySelector("#chosenArea").value = "";
+  document.querySelector("#type").value = "";
+  document.querySelector("#countryName").value = "";
 }
 
 switchGraph = () => {
   counter = currentBtn - 1
-  setts[counter] = {
+  setts[currentBtn] = {
     label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
     data: visits,
     backgroundColor: [
@@ -42,21 +61,22 @@ switchGraph = () => {
   }
   console.log(setts);
 
-  charter(setts);
+  //charter(setts);
 }
 
-inputChange = (e) => {
-  switchingAwayFrom = currentBtn;
-  console.log(switchingAwayFrom);
-//   inputs = [
-//     {cName, chosenArea, type
-//   }
-// ]
-}
+// inputChange = (e) => {
+//   switchingAwayFrom = currentBtn;
+//   console.log(switchingAwayFrom);
+// //   inputs = [
+// //     {cName, chosenArea, type
+// //   }
+// // ]
+// }
 
 document.querySelector(".btn").addEventListener("click", btnColorSwitch)
 //document.querySelector(".btn").addEventListener("click", switchGraph)
-document.querySelector(".btn").addEventListener("click", inputChange)
+//document.querySelector(".btn").addEventListener("click", inputChange)
+document.querySelector(".btn").addEventListener("click", btnInputSwitch)
 btnCounter = 1;
 $(".addBtn").click(() => {
     ++btnCounter;
@@ -76,9 +96,9 @@ $(".addBtn").click(() => {
     // $(`#btn${btnCounter}`).removeClass("btn-light");
     // $(`#btn${btnCounter}`).addClass("btn-primary");
     btnColorSwitch();
+    btnInputSwitch();
     //switchGraph();
-    currentBtn = btnCounter;
-    console.log(btnCounter);
+    currentBtn = btnCounter - 1;
 })
 
 
@@ -183,13 +203,13 @@ async function dataFetch(){
     //console.log(visits);
 
     //setts = [];
-  setts[counter] = {
+  setts[currentBtn] = {
     label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
     data: visits,
     backgroundColor: [
       'rgba(44, 226, 66, 0)'],
     borderColor: [
-      `rgb${colorSet[counter]}`],
+      `rgb${colorSet[currentBtn]}`],
     borderWidth: 2
   }
   console.log(counter);
@@ -207,7 +227,7 @@ function activat(){
   $("#compare").click(() => {
     counter = currentBtn - 1;
     console.log("Comp clicked", counter);
-    setts[counter] = {
+    setts[currentBtn] = {
       label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
       data: visits,
       backgroundColor: [
@@ -233,6 +253,8 @@ function activat(){
       // else{
       //   nationwideSearch = false;
       // }
+      areaSet[currentBtn] = chosenArea;
+
       dataFetch(chosenArea);
       })
 
@@ -243,6 +265,8 @@ function activat(){
       //   dataFetch(type);
       // }
       type = e.target.value;
+      typesSet[currentBtn] = type;
+
       dataFetch(type);
       // secondTime = true;
     })
