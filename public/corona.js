@@ -10,30 +10,78 @@ let parsed;
 let setts = [];
 colorSet = ["(255, 0, 0)", "(0, 255, 0)", "(0, 255, 255)", "(0, 0, 255)", "(255, 204, 51)"]
 
-// secondTime = false;
-// let type2, visits2, chosenArea2;
-
-
-// graphSizeAdjust = () => {
-//   //document.querySelector("#myChart").style.width = window.innerWidth;
-//   //document.querySelector("#myChart").style.height = window.innerHeight * 0.65;
-//   console.log("W: " + document.querySelector("#myChart").width)
-//   console.log("H: " + document.querySelector("#myChart").height)
-//   document.querySelector("#myChart").style.height = 400;
-//   console.log(document.querySelector("#myChart").height)
-// }
-
-// window.addEventListener("resize", () => {
-//   console.log("resized");
-//   //graphSizeAdjust();
-// })
-
-
-// graphSizeAdjust();
 
 console.log("Js loaded")
 
 cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "Transit Stations", "Workplaces", "Residences"]; //differs from below 'typeNames' as this is a clean version of the type naming. Below variable typeNames uses the specific naming that is held in the DB.
+
+
+
+currentBtn = 1;
+btnColorSwitch = (e) => {
+  targeter = e ? `#${e.target.id}` : `#btn${btnCounter}` 
+  console.log(targeter);
+  $(".btn").removeClass("btn-primary");
+  $(".btn").addClass("btn-light");
+  $(targeter).removeClass("btn-light");
+  $(targeter).addClass("btn-primary");
+  currentBtn = targeter.slice(4);
+  console.log(currentBtn)
+}
+
+switchGraph = () => {
+  counter = currentBtn - 1
+  setts[counter] = {
+    label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
+    data: visits,
+    backgroundColor: [
+      'rgba(44, 226, 66, 0)'],
+    borderColor: [
+      `rgb${colorSet[counter]}`],
+    borderWidth: 2
+  }
+  console.log(setts);
+
+  charter(setts);
+}
+
+inputChange = (e) => {
+  switchingAwayFrom = currentBtn;
+  console.log(switchingAwayFrom);
+//   inputs = [
+//     {cName, chosenArea, type
+//   }
+// ]
+}
+
+document.querySelector(".btn").addEventListener("click", btnColorSwitch)
+//document.querySelector(".btn").addEventListener("click", switchGraph)
+document.querySelector(".btn").addEventListener("click", inputChange)
+btnCounter = 1;
+$(".addBtn").click(() => {
+    ++btnCounter;
+    if (btnCounter == 5){
+      $(".addBtn").hide();
+    }
+    newBtn = document.createElement("button");
+    newBtn.type = "button";
+    newBtn.id = `btn${btnCounter}`;
+    newBtn.innerText = btnCounter;
+    newBtn.classList += "btn btn-light";
+    newBtn.addEventListener("click", btnColorSwitch);
+    //newBtn.addEventListener("click", switchGraph);
+    $(".addBtn").before(newBtn);
+    // $(".btn").removeClass("btn-primary");
+    // $(".btn").addClass("btn-light");
+    // $(`#btn${btnCounter}`).removeClass("btn-light");
+    // $(`#btn${btnCounter}`).addClass("btn-primary");
+    btnColorSwitch();
+    //switchGraph();
+    currentBtn = btnCounter;
+    console.log(btnCounter);
+})
+
+
 
 //Autofill for countrynames
 var options = {
@@ -157,7 +205,8 @@ async function dataFetch(){
 function activat(){
 
   $("#compare").click(() => {
-    console.log("Comp clicked", ++counter);
+    counter = currentBtn - 1;
+    console.log("Comp clicked", counter);
     setts[counter] = {
       label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
       data: visits,
