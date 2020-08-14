@@ -1,11 +1,15 @@
 console.log("LOADING V2")
 let type = 0;
 let chosenArea = "Greater London";
+let cName = "United Kingdom";
 areaSet = []
 typesSet = []
+countrySet = []
 areaSet[0] = chosenArea;
 typesSet[0] = type;
-let cName = "United Kingdom";
+countrySet[0] = "United Kingdom"
+let currentBtn = 0;
+
 dataFetch(type, chosenArea);
 countryList = [];
 let nationwideSearch;
@@ -13,7 +17,7 @@ regionList = [];
 let parsed;
 let setts = [];
 colorSet = ["(255, 0, 0)", "(0, 255, 0)", "(0, 255, 255)", "(0, 0, 255)", "(255, 204, 51)"]
-
+let verr;
 
 console.log("Js loaded")
 
@@ -27,7 +31,11 @@ cleanTypeName = ["Retail and Recreation", "Groceries and Pharmacies", "Parks", "
 
 
 
-currentBtn = 0;
+
+btnValueSwitch = (e) => {
+
+}
+
 btnColorSwitch = (e) => {
   targeter = e ? `#${e.target.id}` : `#btn${btnCounter}` 
   console.log(targeter);
@@ -39,13 +47,17 @@ btnColorSwitch = (e) => {
   console.log(currentBtn)
 }
 
-btnInputSwitch = (e) => {
+btnInputSwitch = async(e) => {
   console.log(currentBtn)
   // console.log(inputs)
   // console.log(inputs[currentBtn])
-  document.querySelector("#chosenArea").value = "";
-  document.querySelector("#type").value = "";
-  document.querySelector("#countryName").value = "";
+  await locGet(countrySet[currentBtn]);
+  //listChg();
+
+  document.querySelector("#chosenArea").value = areaSet[currentBtn]
+  //typeConv = typesSet[currentBtn] ? typesSet[currentBtn] : type
+  document.querySelector("#type").value = parseInt(typesSet[currentBtn])
+  document.querySelector("#countryName").value = countrySet[currentBtn];
 }
 
 switchGraph = () => {
@@ -83,13 +95,23 @@ $(".addBtn").click(() => {
     if (btnCounter == 5){
       $(".addBtn").hide();
     }
+  currentBtn = btnCounter - 1;
+
+
+    areaSet[currentBtn] = chosenArea;
+    typesSet[currentBtn] = parseInt(type);
+    countrySet[currentBtn] = cName;
+    console.log(areaSet, typesSet)
+
     newBtn = document.createElement("button");
     newBtn.type = "button";
     newBtn.id = `btn${btnCounter}`;
     newBtn.innerText = btnCounter;
     newBtn.classList += "btn btn-light";
     newBtn.addEventListener("click", btnColorSwitch);
+    newBtn.addEventListener("click", btnInputSwitch);
     //newBtn.addEventListener("click", switchGraph);
+    
     $(".addBtn").before(newBtn);
     // $(".btn").removeClass("btn-primary");
     // $(".btn").addClass("btn-light");
@@ -98,7 +120,6 @@ $(".addBtn").click(() => {
     btnColorSwitch();
     btnInputSwitch();
     //switchGraph();
-    currentBtn = btnCounter - 1;
 })
 
 
@@ -114,14 +135,17 @@ var options = {
 
     onClickEvent: function () {
       cName = $("#countryName").val()
+      countrySet[currentBtn] = cName;
       console.log(cName)
       locGet(cName)
+      //listChg();
     }	
   }
 };
 $("#countryName").easyAutocomplete(options);
 
 activat();
+
 
 async function locGet(cName) {
   let response = await fetch('./regions_by_country3.json');
@@ -132,20 +156,15 @@ async function locGet(cName) {
   console.log(verr)
   console.log("Calling listchg up")
 
-  listChg();
-};
-
-//locGet();
-
-console.log(countryList);
-let inpu;
-
-function listChg(){
+  //listChg();
   dropd = document.querySelector("#chosenArea");
   while (dropd.firstChild) {
     console.log("removing")
     dropd.removeChild(dropd.lastChild);
   }
+  newO = document.createElement("option");
+  newO.textContent = "Select a region";
+  dropd.appendChild(newO);
   verr.forEach(region => {
     console.log("Adding " + region);
     newO = document.createElement("option");
@@ -155,7 +174,16 @@ function listChg(){
   })
   chosenArea = document.querySelector("#chosenArea").value;
   console.log(chosenArea);
-  dataFetch(chosenArea);
+  //dataFetch(chosenArea);
+};
+
+//locGet();
+
+console.log(countryList);
+let inpu;
+
+function listChg(){
+ 
 }
 
 
@@ -167,10 +195,11 @@ function listChg(){
 
 counter = 0;
 async function dataFetch(){
-    console.log(`Data fetch called! You input type: ${type} and ${chosenArea}`)
+    console.log(`Data fetch called! You input type: ${type} and ${areaSet[currentBtn]}`)
     dates = [];
     visits = [];
-
+    chosenArea = areaSet[currentBtn]
+    cName = countrySet[currentBtn]
     let data = { type, chosenArea, cName };
     let fetchOpt = {
       method: "POST",
@@ -181,7 +210,7 @@ async function dataFetch(){
     };
     const fetching = await fetch("posts/api/", fetchOpt);
     const resp = await fetching.json();
-    //console.log(resp);
+    console.log(resp);
 
     resp.forEach((item) => {
       dates.push(item.date);
@@ -204,7 +233,7 @@ async function dataFetch(){
 
     //setts = [];
   setts[currentBtn] = {
-    label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
+    label: `${areaSet[currentBtn]}, ${cName} - ${cleanTypeName[type]}`,
     data: visits,
     backgroundColor: [
       'rgba(44, 226, 66, 0)'],
@@ -228,7 +257,7 @@ function activat(){
     counter = currentBtn - 1;
     console.log("Comp clicked", counter);
     setts[currentBtn] = {
-      label: `${chosenArea}, ${cName} - ${cleanTypeName[type]}`,
+      label: `${areaSet[currentBtn]}, ${cName} - ${cleanTypeName[type]}`,
       data: visits,
       backgroundColor: [
         'rgba(44, 226, 66, 0)'],
@@ -244,7 +273,8 @@ function activat(){
 
     document.querySelector("#chosenArea").addEventListener("change", async (e) => {
       console.log("CA changed")
-      chosenArea = e.target.value;
+      
+      areaSet[currentBtn] = e.target.value;
       // if (chosenArea == "Nationwide"){
       //   chosenArea = cName;
       //   nationwideSearch = true;
@@ -253,9 +283,10 @@ function activat(){
       // else{
       //   nationwideSearch = false;
       // }
-      areaSet[currentBtn] = chosenArea;
+      //areaSet[currentBtn] = chosenArea;
+      console.log("Changed area in array: " + areaSet[currentBtn])
 
-      dataFetch(chosenArea);
+      dataFetch();
       })
 
     document.querySelector("#type").addEventListener("change", async (e) => {
@@ -264,10 +295,12 @@ function activat(){
       //   type2 = e.target.value;
       //   dataFetch(type);
       // }
-      type = e.target.value;
+      type = parseInt(e.target.value);
       typesSet[currentBtn] = type;
+      console.log("Changed type in array: " + typesSet)
 
-      dataFetch(type);
+
+      dataFetch();
       // secondTime = true;
     })
 
@@ -282,11 +315,11 @@ function activat(){
 
 let myChart;
 async function charter(setts){
-  let dates2 = ["2020-02-15", "2020-02-16", "2020-02-17", "2020-02-18", "2020-02-19"]
-  let visits2 = ["-4", "6", "9", "7", "9"]
+  // let dates2 = ["2020-02-15", "2020-02-16", "2020-02-17", "2020-02-18", "2020-02-19"]
+  // let visits2 = ["-4", "6", "9", "7", "9"]
 
-  let dates3 = ["2020-02-15", "2020-02-16", "2020-02-17", "2020-02-18", "2020-02-19"]
-  let visits3 = ["5", "1", "12", "4", "-4"]
+  // let dates3 = ["2020-02-15", "2020-02-16", "2020-02-17", "2020-02-18", "2020-02-19"]
+  // let visits3 = ["5", "1", "12", "4", "-4"]
 
   console.log("charting!")
     var ctx = document.getElementById('myChart').getContext('2d');
