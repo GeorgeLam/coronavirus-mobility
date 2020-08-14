@@ -107,7 +107,7 @@ $(".addBtn").click(() => {
     newBtn.type = "button";
     newBtn.id = `btn${btnCounter}`;
     newBtn.innerText = btnCounter;
-    newBtn.classList += "btn btn-light";
+    newBtn.classList += "btn btn-light mx-2";
     newBtn.addEventListener("click", btnColorSwitch);
     newBtn.addEventListener("click", btnInputSwitch);
     //newBtn.addEventListener("click", switchGraph);
@@ -120,6 +120,18 @@ $(".addBtn").click(() => {
     btnColorSwitch();
     btnInputSwitch();
     //switchGraph();
+
+  setts[currentBtn] = {
+    label: `${areaSet[currentBtn]}, ${cName} - ${cleanTypeName[type]}`,
+    data: visits,
+    backgroundColor: [
+      'rgba(44, 226, 66, 0)'],
+    borderColor: [
+      `rgb${colorSet[currentBtn]}`],
+    borderWidth: 2
+  }
+  console.log(counter);
+  charter(setts);
 })
 
 
@@ -151,9 +163,9 @@ async function locGet(cName) {
   let response = await fetch('./regions_by_country3.json');
   let data = await response.text();
   parsed = JSON.parse(data);
-  console.log(parsed);
+  //console.log(parsed);
   verr = parsed.filter(item => (item["country"] == cName))[0]["regions"]
-  console.log(verr)
+  //console.log(verr)
   console.log("Calling listchg up")
 
   //listChg();
@@ -166,13 +178,15 @@ async function locGet(cName) {
   newO.textContent = "Select a region";
   dropd.appendChild(newO);
   verr.forEach(region => {
-    console.log("Adding " + region);
+    //console.log("Adding " + region);
     newO = document.createElement("option");
     newO.textContent = region;
     newO.value = region;
     dropd.appendChild(newO);
   })
-  chosenArea = document.querySelector("#chosenArea").value;
+  if(document.querySelector("#chosenArea").value != "Select a region"){
+    chosenArea = document.querySelector("#chosenArea").value;
+  }
   console.log(chosenArea);
   //dataFetch(chosenArea);
 };
