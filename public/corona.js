@@ -39,8 +39,8 @@ btnValueSwitch = (e) => {
 btnColorSwitch = (e) => {
   targeter = e ? `#${e.target.id}` : `#btn${btnCounter}` 
   console.log(targeter);
-  $(".btn").removeClass("btn-primary");
-  $(".btn").addClass("btn-light");
+  $(".plotBtns").removeClass("btn-primary");
+  $(".plotBtns").addClass("btn-light");
   $(targeter).removeClass("btn-light");
   $(targeter).addClass("btn-primary");
   currentBtn = targeter.slice(4) - 1;
@@ -69,7 +69,8 @@ switchGraph = () => {
       'rgba(44, 226, 66, 0)'],
     borderColor: [
       `rgb${colorSet[counter]}`],
-    borderWidth: 2
+    borderWidth: 2,
+    visibility: 1
   }
   console.log(setts);
 
@@ -85,10 +86,10 @@ switchGraph = () => {
 // // ]
 // }
 
-document.querySelector(".btn").addEventListener("click", btnColorSwitch)
+document.querySelector(".plotBtns").addEventListener("click", btnColorSwitch)
 //document.querySelector(".btn").addEventListener("click", switchGraph)
 //document.querySelector(".btn").addEventListener("click", inputChange)
-document.querySelector(".btn").addEventListener("click", btnInputSwitch)
+document.querySelector(".plotBtns").addEventListener("click", btnInputSwitch)
 btnCounter = 1;
 $(".addBtn").click(() => {
     ++btnCounter;
@@ -107,7 +108,7 @@ $(".addBtn").click(() => {
     newBtn.type = "button";
     newBtn.id = `btn${btnCounter}`;
     newBtn.innerText = btnCounter;
-    newBtn.classList += "btn btn-light mx-2";
+    newBtn.classList += "btn plotBtns btn-light mx-1 mx-md-2";
     newBtn.addEventListener("click", btnColorSwitch);
     newBtn.addEventListener("click", btnInputSwitch);
     //newBtn.addEventListener("click", switchGraph);
@@ -128,12 +129,29 @@ $(".addBtn").click(() => {
       'rgba(44, 226, 66, 0)'],
     borderColor: [
       `rgb${colorSet[currentBtn]}`],
-    borderWidth: 2
+    borderWidth: 2,
+    visibility: 1
   }
   console.log(counter);
   charter(setts);
 })
 
+let toggled;
+$("#toggleBtn").click(() => {
+  if (setts[currentBtn].visibility == 0){
+    setts[currentBtn].visibility = 1;
+    charter(setts);
+    toggled = 0
+    return;
+  }
+  toggled = 1
+  console.log("You want to toggle: " + currentBtn);
+  // toggledSetts = setts.filter((plot, index) => index!= currentBtn)
+  // console.log(toggledSetts);
+  // charter(toggledSetts);
+  setts[currentBtn].visibility = 0;
+  charter(setts);
+})
 
 
 //Autofill for countrynames
@@ -253,7 +271,8 @@ async function dataFetch(){
       'rgba(44, 226, 66, 0)'],
     borderColor: [
       `rgb${colorSet[currentBtn]}`],
-    borderWidth: 2
+    borderWidth: 2,
+    visibility: 1
   }
   console.log(counter);
   charter(setts);
@@ -336,6 +355,9 @@ async function charter(setts){
   // let visits3 = ["5", "1", "12", "4", "-4"]
 
   console.log("charting!")
+
+  settsV = setts.filter(item => item.visibility == 1)
+
     var ctx = document.getElementById('myChart').getContext('2d');
     //console.log(ctx);
     //ctx.height = 100;
@@ -345,7 +367,7 @@ async function charter(setts){
         type: 'line',
         data: {
             labels: dates,
-            datasets: setts
+            datasets: settsV
               // {
               //   label: `${chosenArea} - % Change in Activity in ${type}`,
               //   data: visits3,
