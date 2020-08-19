@@ -1,0 +1,1 @@
+A web app created using Javascript and the chart.js library. The data source is Google's Coronavirus Mobility Report (https://www.google.com/covid19/mobility/). The data was downloaded in .csv and uploaded to MongoDB. Node.js and Express are used to retrieve the data, which is then displayed by Chart.js. 
