@@ -231,8 +231,10 @@ async function dataFetch(){
     dates = [];
     visits = [];
     chosenArea = areaSet[currentBtn]
+    chosenArea2 = ""
     cName = countrySet[currentBtn]
-    let data = { type, chosenArea, cName };
+
+    let data = { type, chosenArea, chosenArea2, cName };
     let fetchOpt = {
       method: "POST",
       headers: {
